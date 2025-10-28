@@ -109,5 +109,31 @@ h1 {
 
   .hr-forecast-container {
     width: 35%;
+    margin-left: 1rem;
+    background-color: v.$neutral-800;
+    padding: 1rem;
+    border-radius: $borderRadius;
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: .5rem;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+
+      li {
+        background-color: v.$neutral-700;
+        padding: .7rem;
+        border-radius: .5rem;
+
+        p {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
   }
 }

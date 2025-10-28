@@ -50,7 +50,8 @@ export class CityWeather {
     const params = {
       latitude: foundLatitude,
       longitude: foundLongitude,
-      current: ["temperature_2m", "weather_code", "precipitation", "wind_speed_10m", "apparent_temperature", "relative_humidity_2m"],
+      "hourly": ["temperature_2m", "precipitation", "relative_humidity_2m", "wind_speed_10m", "apparent_temperature", "weather_code"],
+      "forecast_hours": 12,
     };
     const url = 'https://api.open-meteo.com/v1/forecast';
     const responses = await fetchWeatherApi(url, params);
@@ -70,38 +71,46 @@ export class CityWeather {
       `\nTimezone difference to GMT+0: ${utcOffsetSeconds}s`,
     );
 
-    const current = response.current()!;
+    const hourly = response.hourly()!;
 
     // Note: The order of weather variables in the URL query and the indices below need to match!
     const weatherData = {
-      current: {
-        time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
-        temperature_2m: current.variables(0)!.value(),
-        weather_code: current.variables(1)!.value(),
-        precipitation: current.variables(2)!.value(),
-        wind_speed_10m: current.variables(3)!.value(),
-        apparent_temperature: current.variables(4)!.value(),
-        relative_humidity_2m: current.variables(5)!.value(),
+      hourly: {
+        time: Array.from(
+          { length: (Number(hourly.timeEnd()) - Number(hourly.time())) / hourly.interval() },
+          (_, i) => new Date((Number(hourly.time()) + i * hourly.interval() + utcOffsetSeconds) * 1000)
+        ),
+        temperature_2m: hourly.variables(0)!.valuesArray(),
+        precipitation: hourly.variables(1)!.valuesArray(),
+        relative_humidity_2m: hourly.variables(2)!.valuesArray(),
+        wind_speed_10m: hourly.variables(3)!.valuesArray(),
+        apparent_temperature: hourly.variables(4)!.valuesArray(),
+        weather_code: hourly.variables(5)!.valuesArray(),
       },
     };
 
+    console.log("\nHourly data", weatherData.hourly)
+
     // 'weatherData' now contains a simple structure with arrays with datetime and weather data
-    console.log(weatherData);
+    // console.log(weatherData);
     console.log(
-      `\nCurrent time: ${weatherData.current.time}`,
-      `\nCurrent temperature_2m: ${weatherData.current.temperature_2m}`,
-      `\nCurrent weather_code: ${weatherData.current.weather_code}`,
-      `\nCurrent precipitation: ${weatherData.current.precipitation}`,
-      `\nCurrent wind_speed_10m: ${weatherData.current.wind_speed_10m}`,
-      `\nCurrent apparent_temperature: ${weatherData.current.apparent_temperature}`,
-      `\nCurrent relative_humidity_2m: ${weatherData.current.relative_humidity_2m}`,
+      `\nCurrent time: ${weatherData.hourly.time[0]}`,
+      `\nCurrent temperature_2m: ${weatherData.hourly.temperature_2m![0]}`,
+      `\nCurrent weather_code: ${weatherData.hourly.weather_code![0]}`,
+      `\nCurrent precipitation: ${weatherData.hourly.precipitation![0]}`,
+      `\nCurrent wind_speed_10m: ${weatherData.hourly.wind_speed_10m![0]}`,
+      `\nCurrent apparent_temperature: ${weatherData.hourly.apparent_temperature![0]}`,
+      `\nCurrent relative_humidity_2m: ${weatherData.hourly.relative_humidity_2m![0]}`,
     );
 
-    this.weatherSignals.cityTemps.set(Math.floor(weatherData.current.temperature_2m));
-    this.weatherSignals.cityFeelsTemps.set(Math.floor(weatherData.current.apparent_temperature));
-    this.weatherSignals.cityHumidity.set(Math.floor(weatherData.current.relative_humidity_2m));
-    this.weatherSignals.cityWind.set(Math.floor(weatherData.current.wind_speed_10m));
-    this.weatherSignals.cityPrecipitation.set(Math.floor(weatherData.current.precipitation));
+    this.weatherSignals.cityTemps.set(Math.floor(weatherData.hourly.temperature_2m![0]));
+    this.weatherSignals.cityFeelsTemps.set(Math.floor(weatherData.hourly.apparent_temperature![0]));
+    this.weatherSignals.cityHumidity.set(Math.floor(weatherData.hourly.relative_humidity_2m![0]));
+    this.weatherSignals.cityWind.set(Math.floor(weatherData.hourly.wind_speed_10m![0]));
+    this.weatherSignals.cityPrecipitation.set(Math.floor(weatherData.hourly.precipitation![0]));
+
+    this.weatherSignals.cityHours.set(weatherData.hourly.time);
+    this.weatherSignals.cityHourlyTemps.set(weatherData.hourly.temperature_2m!.slice(0, 8));
 
     this.weatherSignals.cityLoading.set(false);
   }

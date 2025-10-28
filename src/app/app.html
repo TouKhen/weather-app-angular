@@ -72,7 +72,20 @@
           </ul>
           <app-table></app-table>
         </div>
-        <aside class="hr-forecast-container"></aside>
+        <aside class="hr-forecast-container">
+          <h3>Hourly forecast</h3>
+          <ul>
+            @for (item of weatherSignals.cityHourlyTemps(); track weatherSignals.cityHourlyTemps(); let idx = $index) {
+              <li>
+                @if (unitsSignals.tempsUnit() == "celsius") {
+                  <p>{{ weatherSignals.cityHours()[idx] | date: 'shortTime' }} <span>{{ item | number: '1.0-0' }}°</span></p>
+                } @else {
+                  <p>{{ weatherSignals.cityHours()[idx] | date: 'shortTime' }} <span>{{ celsiusToFahrenheit(item) | number: '1.0-0' }}°</span></p>
+                }
+              </li>
+            }
+          </ul>
+        </aside>
       </main>
     }
 

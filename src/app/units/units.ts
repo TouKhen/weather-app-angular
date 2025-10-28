@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, effect} from '@angular/core';
 import {UnitsSignalsService} from './units.service';
 import {NgClass} from '@angular/common';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
@@ -13,7 +13,22 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
   styleUrl: './units.scss'
 })
 export class Units {
-  constructor(private unitsSignals: UnitsSignalsService) {}
+  constructor(private unitsSignals: UnitsSignalsService) {
+    // Check if all switch are on for Imperial or Celsius
+    effect(() => {
+      if (this.unitsSignals.tempsUnit() == 'fahrenheit' &&
+        this.unitsSignals.speedUnit() == 'mph' &&
+        this.unitsSignals.heightUnit() == 'in' ) {
+        this.isUnitSwitched = true;
+        this.unitSwitchText = "Switch to Metric";
+      } else if (this.unitsSignals.tempsUnit() == 'celsius' &&
+        this.unitsSignals.speedUnit() == 'km/h' &&
+        this.unitsSignals.heightUnit() == 'mm' ) {
+        this.isUnitSwitched = false;
+        this.unitSwitchText = "Switch to Imperial";
+      }
+    })
+  }
 
   isUnitsDropdownToggled = false;
   unitsDropdownStyle = "unit-dropdown hidden";

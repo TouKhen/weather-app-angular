@@ -4,11 +4,12 @@ import { WeatherSignalsService } from './city-weather/city-weather.service';
 import {Table} from './table/table';
 import {Units} from './units/units';
 import {UnitsSignalsService} from './units/units.service';
+import {DatePipe, DecimalPipe} from '@angular/common';
 
 
 @Component({
   selector: 'app-root',
-  imports: [CityWeather, Table, Units],
+  imports: [CityWeather, Table, Units, DecimalPipe, DatePipe],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -22,8 +23,6 @@ export class App {
   }
 
   kmhToMph(value:any) {
-    console.log(value)
-    console.log(value * 2);
     return Math.floor(value * 0.621371);
   }
 
