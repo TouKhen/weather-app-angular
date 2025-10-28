@@ -129,6 +129,11 @@ h1 {
         padding: .7rem;
         border-radius: .5rem;
 
+        img {
+          width: 16px;
+          height: 16px;
+        }
+
         p {
           display: flex;
           justify-content: space-between;

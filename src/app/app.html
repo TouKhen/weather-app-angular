@@ -78,9 +78,9 @@
             @for (item of weatherSignals.cityHourlyTemps(); track weatherSignals.cityHourlyTemps(); let idx = $index) {
               <li>
                 @if (unitsSignals.tempsUnit() == "celsius") {
-                  <p>{{ weatherSignals.cityHours()[idx] | date: 'shortTime' }} <span>{{ item | number: '1.0-0' }}°</span></p>
+                  <p><img src="/assets/images/icon-partly-cloudy.webp" alt="">{{ weatherSignals.cityHours()[idx] | date: 'shortTime' }} <span>{{ item | number: '1.0-0' }}°</span></p>
                 } @else {
-                  <p>{{ weatherSignals.cityHours()[idx] | date: 'shortTime' }} <span>{{ celsiusToFahrenheit(item) | number: '1.0-0' }}°</span></p>
+                  <p><img src="/assets/images/icon-partly-cloudy.webp" alt="">{{ weatherSignals.cityHours()[idx] | date: 'shortTime' }} <span>{{ celsiusToFahrenheit(item) | number: '1.0-0' }}°</span></p>
                 }
               </li>
             }
