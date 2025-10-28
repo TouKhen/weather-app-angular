@@ -18,7 +18,10 @@
 
     <app-city-weather></app-city-weather>
 
-    @if (weatherSignals.cityLoading()) {
+    @if (!weatherSignals.searchBool) {
+      <p></p>
+    }
+    @else if (weatherSignals.cityLoading()) {
       <h2 class="loading-text">Loading...</h2>
     }
     @else {
@@ -27,11 +30,10 @@
           <div class="location-temps-container">
             <div>
               <h2 class="location-name">{{ weatherSignals.cityName() }}</h2>
-              <p class="date">Lorem ipsum</p>
+              <p class="date">{{ weatherSignals.cityHours()[0] | date: 'fullDate'}}</p>
             </div>
-
             <div>
-              <img src="assets/images/icon-sunny.webp" alt="" />
+              <img src="{{getWeatherIcon(weatherSignals.cityWeatherCode()[0])}}" alt="" fill/>
               @if (unitsSignals.tempsUnit() == "celsius") {
                 <p class="location-temps">{{ weatherSignals.cityTemps() }}°</p>
               }@else {
@@ -42,7 +44,7 @@
 
           <ul class="location-data-list">
             <li class="feel-temps">
-              <p>Feeks Like</p>
+              <p>Feels Like</p>
               @if (unitsSignals.tempsUnit() == "celsius") {
                 <p>{{ weatherSignals.cityFeelsTemps() }}°</p>
               }@else {
@@ -78,9 +80,9 @@
             @for (item of weatherSignals.cityHourlyTemps(); track weatherSignals.cityHourlyTemps(); let idx = $index) {
               <li>
                 @if (unitsSignals.tempsUnit() == "celsius") {
-                  <p><img src="/assets/images/icon-partly-cloudy.webp" alt="">{{ weatherSignals.cityHours()[idx] | date: 'shortTime' }} <span>{{ item | number: '1.0-0' }}°</span></p>
+                  <p><span class="img-wrapper"><img src="{{getWeatherIcon(weatherSignals.cityWeatherCode()[idx])}}" alt=""></span>{{ weatherSignals.cityHours()[idx] | date: 'shortTime' }} <span>{{ item | number: '1.0-0' }}°</span></p>
                 } @else {
-                  <p><img src="/assets/images/icon-partly-cloudy.webp" alt="">{{ weatherSignals.cityHours()[idx] | date: 'shortTime' }} <span>{{ celsiusToFahrenheit(item) | number: '1.0-0' }}°</span></p>
+                  <p><span class="img-wrapper"><img src="{{getWeatherIcon(weatherSignals.cityWeatherCode()[idx])}}" alt=""></span>{{ weatherSignals.cityHours()[idx] | date: 'shortTime' }} <span>{{ celsiusToFahrenheit(item) | number: '1.0-0' }}°</span></p>
                 }
               </li>
             }
@@ -88,12 +90,5 @@
         </aside>
       </main>
     }
-
-
-    Daily forecast
-    <!-- Insert daily forecast for the next 7 days here -->
-
-    Hourly forecast
-    <!-- Insert hourly forecast for the selected day here -->
   </div>
 </div>

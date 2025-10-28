@@ -23,6 +23,7 @@ export class CityWeather {
   }
 
   fetchCoordinates(city:string) {
+    this.weatherSignals.searchBool = true;
     this.weatherSignals.cityLoading.set(true);
 
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}&limit=1`;
@@ -111,6 +112,7 @@ export class CityWeather {
 
     this.weatherSignals.cityHours.set(weatherData.hourly.time);
     this.weatherSignals.cityHourlyTemps.set(weatherData.hourly.temperature_2m!.slice(0, 8));
+    this.weatherSignals.cityWeatherCode.set(weatherData.hourly.weather_code);
 
     this.weatherSignals.cityLoading.set(false);
   }

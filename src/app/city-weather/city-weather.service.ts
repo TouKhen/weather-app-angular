@@ -4,6 +4,7 @@ import {Injectable, signal, WritableSignal} from '@angular/core';
   providedIn: 'root',
 })
 export class WeatherSignalsService {
+  searchBool = false;
   cityName = signal('');
   cityTemps = signal(0);
   cityFeelsTemps = signal(0);
@@ -13,4 +14,5 @@ export class WeatherSignalsService {
   cityLoading = signal(false);
   cityHours:WritableSignal<any> = signal([]);
   cityHourlyTemps:WritableSignal<any> = signal([]);
+  cityWeatherCode:WritableSignal<any> = signal([]);
 }
