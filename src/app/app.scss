@@ -1,0 +1,113 @@
+@use '../vars.scss' as v;
+
+.page-nav {
+  display: flex;
+  justify-content: center;
+
+  & > ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-block: 1.5rem;
+  }
+}
+
+h1 {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.loading-text {
+  text-align: center;
+  margin-block: 4rem;
+}
+
+.city-meteo-container {
+  $borderRadius: 15px;
+
+  display: flex;
+  margin-top: 2rem;
+
+  .main-data-container {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+
+    .location-temps-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      background: url('/assets/images/bg-today-large.svg') no-repeat;
+      background-position: center center;
+      padding: 5rem 1rem;
+      border-radius: $borderRadius;
+
+      > div:first-child {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .location-name {
+          font-size: 1.3rem;
+        }
+
+        .date {
+          font-size: .8rem;
+          font-weight: 500;
+          color: v.$neutral-200;
+        }
+      }
+
+      > div:nth-child(2) {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        img {
+          width: 5rem;
+          height: 5rem;
+        }
+
+        .location-temps {
+          font-size: 4rem;
+          font-weight: 600;
+          font-style: italic;
+        }
+      }
+    }
+
+    .location-data-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+
+      li {
+        display: flex;
+        flex-direction: column;
+        gap: .6rem;
+        background-color: v.$neutral-800;
+        padding: 1rem;
+        border-radius: $borderRadius;
+
+        p:first-child {
+          font-size: .8rem;
+          font-weight: 500;
+          color: v.$neutral-200;
+        }
+
+        p:nth-child(2) {
+          font-size: 1.2rem;
+          font-weight: 400;
+          color: v.$neutral-200;
+        }
+      }
+    }
+  }
+
+  .hr-forecast-container {
+    width: 35%;
+  }
+}

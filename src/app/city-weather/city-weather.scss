@@ -1,0 +1,41 @@
+@use '../../vars.scss' as v;
+
+.city-form {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+
+  input {
+    padding: .7rem 1rem .7rem calc(1rem + 20px + 1rem);
+    background: url('/assets/images/icon-search.svg') no-repeat 1rem;
+    background-color: v.$neutral-800 !important;
+    background-size: 20px;
+    width: 35%;
+    border: none;
+    border-radius: 10px;
+    height: 42px;
+    color: v.$neutral-0;
+
+    &::placeholder {
+      color: v.$neutral-300;
+      font-weight: 500;
+      font-size: .8rem;
+    }
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: v.$blue-500;
+    color: v.$neutral-0;
+    padding: .7rem;
+    font-size: .8rem;
+    border: none;
+    border-radius: 10px;
+    height: 42px;
+    cursor: pointer;
+  }
+}

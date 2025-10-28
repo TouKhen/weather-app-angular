@@ -1,0 +1,96 @@
+<div class="unit-container">
+  <button class="unit-btn" (click)="toggleUnitsDropdown()">
+    <img src="assets/images/icon-units.svg" alt="" /> Units <img
+    src="assets/images/icon-dropdown.svg" alt="" />
+  </button>
+
+  <div [ngClass]="unitsDropdownStyle">
+    <button class="unit-toggle" (click)="unitsSwitch()">
+      {{ unitSwitchText }}
+    </button>
+
+    <ul class="units-toggle-list">
+      <li class="unit-temps">
+        <p>Temperature</p>
+
+        <form [formGroup]="tempsForm">
+          <ul>
+            @if(!isUnitSwitched) {
+              <li>
+                <label for="temps-celsius">Celsius (C°)</label>
+                <input id="temps-celsius" name="temps" type="radio" value="celsius" (change)="changeTemps($event)" checked>
+              </li>
+              <li>
+                <label for="temps-fahrenheit">Fahrenheit (°F)</label>
+                <input id="temps-fahrenheit" name="temps" type="radio" value="fahrenheit" (change)="changeTemps($event)">
+              </li>
+            } @else {
+              <li>
+                <label for="temps-celsius">Celsius (C°)</label>
+                <input id="temps-celsius" name="temps" type="radio" value="celsius" (change)="changeTemps($event)">
+              </li>
+              <li>
+                <label for="temps-fahrenheit">Fahrenheit (°F)</label>
+                <input id="temps-fahrenheit" name="temps" type="radio" value="fahrenheit" (change)="changeTemps($event)" checked>
+              </li>
+            }
+          </ul>
+        </form>
+      </li>
+      <li class="unit-wind">
+        <p>Wind Speed</p>
+
+        <form [formGroup]="windForm">
+          <ul>
+            @if(!isUnitSwitched) {
+              <li>
+                <label for="wind-kmh">km/h</label>
+                <input id="wind-kmh" name="wind" type="radio" value="km/h" (change)="changeWind($event)" checked>
+              </li>
+              <li>
+                <label for="wind-mph">mph</label>
+                <input id="wind-mph" name="wind" type="radio" value="mph" (change)="changeWind($event)">
+              </li>
+            } @else {
+              <li>
+                <label for="wind-kmh">km/h</label>
+                <input id="wind-kmh" name="wind" type="radio" value="km/h" (change)="changeWind($event)">
+              </li>
+              <li>
+                <label for="wind-mph">mph</label>
+                <input id="wind-mph" name="wind" type="radio" value="mph" (change)="changeWind($event)" checked>
+              </li>
+            }
+          </ul>
+        </form>
+      </li>
+      <li class="unit-precipitation">
+        <p>Precipitation</p>
+
+        <form [formGroup]="precipitationForm">
+          <ul>
+            @if(!isUnitSwitched) {
+              <li>
+                <label for="precipitation-mm">mm</label>
+                <input id="precipitation-mm" name="precipitation" type="radio" value="mm" (change)="changePrecipitation($event)" checked>
+              </li>
+              <li>
+                <label for="precipitation-in">in</label>
+                <input id="precipitation-in" name="precipitation" type="radio" value="in" (change)="changePrecipitation($event)">
+              </li>
+            } @else {
+              <li>
+                <label for="precipitation-mm">mm</label>
+                <input id="precipitation-mm" name="precipitation" type="radio" value="mm" (change)="changePrecipitation($event)">
+              </li>
+              <li>
+                <label for="precipitation-in">in</label>
+                <input id="precipitation-in" name="precipitation" type="radio" value="in" (change)="changePrecipitation($event)" checked>
+              </li>
+            }
+          </ul>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>

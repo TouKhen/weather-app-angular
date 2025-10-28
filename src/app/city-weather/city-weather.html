@@ -1,0 +1,5 @@
+<form id="cityForm" class="city-form" action="" method="POST" [formGroup]="cityForm" (ngSubmit)="getCityWeather()">
+  <input id="cityInput" type="text" placeholder="Search for a place..." formControlName="city" />
+
+  <button type="submit" >Search</button>
+</form>
